@@ -1,0 +1,31 @@
+:root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.status {
+  margin-top: 1rem;
+  font-weight: 600;
+}
