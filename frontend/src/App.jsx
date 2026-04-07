@@ -1,35 +1,38 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import BookingPage from './pages/BookingPage'
+import GroomerPage from './pages/GroomerPage'
+import './index.css'
 
-const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const TABS = [
+  { key: 'book',    label: 'Book Appointment' },
+  { key: 'groomer', label: 'Groomer Schedule' },
+]
 
-function App() {
-  const [status, setStatus] = useState('Checking API...')
-
-  useEffect(() => {
-    async function checkApi() {
-      try {
-        const response = await fetch(`${apiBase}/api/health`)
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`)
-        }
-
-        const data = await response.json()
-        setStatus(`API status: ${data.status}`)
-      } catch (error) {
-        setStatus(`API status: unavailable (${error.message})`)
-      }
-    }
-
-    checkApi()
-  }, [])
+export default function App() {
+  const [activeTab, setActiveTab] = useState('book')
 
   return (
-    <main className="app">
-      <h1>Wagtopia</h1>
-      <p>React + FastAPI starter is running.</p>
-      <p className="status">{status}</p>
-    </main>
+    <div className="app-shell">
+      <header className="app-header">
+        <div className="app-logo">Wagtopia</div>
+      </header>
+
+      <nav className="tab-bar">
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            className={`tab-btn ${activeTab === t.key ? 'active' : ''}`}
+            onClick={() => setActiveTab(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="page-content">
+        {activeTab === 'book'    && <BookingPage />}
+        {activeTab === 'groomer' && <GroomerPage />}
+      </main>
+    </div>
   )
 }
-
-export default App
