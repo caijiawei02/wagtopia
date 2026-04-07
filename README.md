@@ -131,7 +131,10 @@ Returns `409 Conflict` if the groomer has an overlapping booking, or `422` if th
 - Groomer working hours are **09:00 – 17:00** (9 am to 5 pm).
 - Appointments can only be booked on the hour: 09:00, 10:00, 11:00, …, 16:00 (last slot ends at 17:00).
 - When booking for today, past time slots are hidden from the dropdown (e.g. at 1:23 pm, only 14:00 onwards is shown).
-- A groomer **cannot** have overlapping bookings. A new booking that overlaps an existing one is rejected with `409`.
+- When a groomer and date are selected, already-booked slots appear as **"HH:MM — Unavailable"** and cannot be selected, preventing overlapping bookings from the UI.
+- The backend also enforces no overlapping bookings as a safeguard for direct API calls, returning `409 Conflict` if a conflict is detected.
+- In the groomer schedule, past bookings (where the end time has passed) are displayed greyed out.
+- The dog dropdown is disabled until a parent is selected; dogs are loaded dynamically based on the selected parent.
 
 ---
 
@@ -156,7 +159,15 @@ Auto-loaded on first startup:
 | Groomer | Date       | Time  | Parent | Dog   | Service  |
 |---------|------------|-------|--------|-------|----------|
 | Mia     | 2026-04-01 | 10:00 | Alice  | Coco  | Grooming |
-| Tom     | 2026-05-01 | 09:00–16:00 | various | various | fully booked |
+| Tom     | 2026-04-04 | 13:00 | Alice  | Coco  | Grooming |
+| Tom     | 2026-05-01 | 09:00 | Alice  | Coco  | Grooming |
+| Tom     | 2026-05-01 | 10:00 | Alice  | Max   | Wash     |
+| Tom     | 2026-05-01 | 11:00 | Bob    | Buddy | Grooming |
+| Tom     | 2026-05-01 | 12:00 | Carol  | Luna  | Wash     |
+| Tom     | 2026-05-01 | 13:00 | Alice  | Coco  | Grooming |
+| Tom     | 2026-05-01 | 14:00 | Bob    | Buddy | Wash     |
+| Tom     | 2026-05-01 | 15:00 | Carol  | Luna  | Grooming |
+| Tom     | 2026-05-01 | 16:00 | Alice  | Max   | Wash     |
 
 ---
 
