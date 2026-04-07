@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent / "wagtopia.db"
+DB_PATH = Path("/tmp/wagtopia.db")
 
 
 def get_db() -> sqlite3.Connection:
